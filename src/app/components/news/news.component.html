@@ -1,0 +1,53 @@
+<div class="container my-5">
+  <div class="row">
+    <div class="col-12">
+      <div class="header h5 text-muted my-4" *ngIf="title">
+        {{ title }}
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div
+          *ngFor="let item of slicedNews; index as i"
+          class="p-0 p-1 col-md-6 animated fadeIn"
+          [ngClass]="{
+            'col-lg-4': i !== 0 || i !== 6,
+            'col-lg-8': i === 0 || i === 6
+          }"
+        >
+          <div
+            class="news-card"
+            [style.background-image]="'url(' + item.enclosure.link + ')'"
+          >
+            <div class="overlay text-white">
+              <div class="content px-3">
+                <h6 class="title h6">
+                  {{
+                    !this.isSmallDevice && !isMidDevice
+                      ? i === 0 || i === 6
+                        ? item.title
+                        : (item.title | slice: 0:35) + " ..."
+                      : isMidDevice
+                      ? (item.title | slice: 0:35) + " ..."
+                      : item.title
+                  }}
+                </h6>
+                <div class="date text-muted mb-3">
+                  <small>{{ item.pubDate }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-12 w-100 d-flex justify-content-center my-3"
+      *ngIf="!noMore"
+    >
+      <button class="btn btn-outline-dark" (click)="onAddMore()">
+        View More
+      </button>
+    </div>
+  </div>
+</div>
